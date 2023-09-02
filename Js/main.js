@@ -4,7 +4,7 @@ let hero = prompt( "Ingrese su Nombre de heroe:");
 let vidaHero = 100;
 let dañoBasicoHero = Math.ceil(Math.random()*(10-1)+1);
 let armHero = 10;
-let inventario = [];
+const inventario = [];
 
 let encRandom ;
 let accion;
@@ -53,7 +53,7 @@ function encuentro1() {
 function encuentro2(){
 
     let cofre = prompt(hero + " encontró un cofre entre los arbustos, parece que no hay nadie cerca ¿lo quieres abrir? (SI o NO)");
-
+    cofre = cofre.toUpperCase();
     if(cofre=="SI"){
      
 
@@ -64,13 +64,11 @@ function encuentro2(){
         switch (cofreRandom) {
 
             case 1:
-                console.log(hero + " abrió el cofre encontró una ESPADA nueva!!!")
-                preg=prompt("¿Equipar la ESPADA nueva?");
+                console.log(hero + " abrió el cofre encontró una ESPADA DE CRUZADO!!!")
+                preg=prompt("¿Equipar la ESPADA DE CRUZADO? (SI o NO)");
+                preg = preg.toUpperCase();
                 if(preg=="SI"){
-                    if (inventario[0+k]==true){
-                        k++;
-                    }
-                    inventario[0+k] = "ESPADA";
+                    inventario[0+k] = "ESPADA DE CRUZADO";
                     dañoBasicoHero = Math.ceil(Math.random()*(15-5)+5);
                     console.log("daño basico del heroe AUMENTÓ !!!");
                 }
@@ -78,10 +76,8 @@ function encuentro2(){
 
             case 2:
                 preg = prompt(hero + "abrió el cofre y encontró un LIBRO MISTERIOSO, ¿Llevar LIBRO MISTERIOSO? (SI o NO)");
+                preg = preg.toUpperCase();
                 if (preg=="SI"){
-                    if (inventario[0+k]==true){
-                        k++;
-                    }
                     inventario[0+k] = "LIBRO MISTERIOSO";
                 }
             break;
@@ -92,10 +88,8 @@ function encuentro2(){
 
             case 4:
                 preg=prompt(hero + " abrió el cofre y encontro una ARMADURA RELUCIENTE, ¿Equipar ARMADURA RELUCIENTE? (SI o NO)");
+                preg = preg.toUpperCase();
                 if(preg=="SI"){
-                    if (inventario[0+k]==true){
-                        k++;
-                    }
                     inventario[0+k] = "ARMADURA RELUCIENTE";
                     armHero = 30
                     console.log("La armadura del heroe AUMENTÓ !!!")
@@ -103,6 +97,7 @@ function encuentro2(){
             break;
         }
     }
+    k++;
 }
 
 
@@ -111,7 +106,7 @@ let pasosHero = prompt( "Ingrese cuanto quiere caminar en el bosque" );
 
 for (let i = 0; i < pasosHero; i++) {
 
-    encRandom = Math.ceil ( Math.random()*4);
+    encRandom = Math.ceil ( Math.random()*2);
 
     switch (encRandom) {
         case 1:
@@ -119,10 +114,6 @@ for (let i = 0; i < pasosHero; i++) {
             break;
         case 2:
             encuentro2();
-            break;
-        case 3:
-            break;
-        case 4:
             break;
 
     }
