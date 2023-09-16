@@ -19,7 +19,9 @@ let vidaMons;
 let dañoMons;
 let armMons;
 
-
+function filtroEspada(item) {
+    return item === "KATANA MALDITA LEGENDARIA";
+}
 
 
 function encuentro1() {
@@ -90,31 +92,33 @@ function encuentro2(){
     if(cofre=="SI"){
      
 
-        cofreRandom = Math.ceil ( Math.random()*4);
+        cofreRandom = Math.ceil ( Math.random()*5);
+
 
         let preg;
 
         switch (cofreRandom) {
 
             case 1:
-                console.log(hero.name + " abrió el cofre encontró una ESPADA DE CRUZADO!!!")
+                console.log(hero.name + " abrió el cofre encontró una ESPADA DE CRUZADO!!!");
                 preg=prompt("¿Equipar la ESPADA DE CRUZADO? (SI o NO)");
                 preg = preg.toUpperCase();
                 let espada = "ESPADA DE CRUZADO";
                 if((preg=="SI")&&(!hero.inventario.includes(espada))){
-                    hero.inventario[0+k] = espada ;
+                    hero.inventario.push(espada) ;
                     hero.daño += 1;
                     console.log("Fuerza del heroe AUMENTÓ en 1, ahora posee "+ hero.daño +" str !!!!");
                 }else {
-                    console.log(hero.name +" ya posee este objeto, no se puede equipar ")
+                    console.log(hero.name +" ya posee este objeto, no se puede equipar ");
                 }
             break;
 
             case 2:
+                let libro = "LIBRO MISTERIOSO";
                 preg = prompt(hero.name + "abrió el cofre y encontró un LIBRO MISTERIOSO, ¿Llevar LIBRO MISTERIOSO? (SI o NO)");
                 preg = preg.toUpperCase();
                 if (preg=="SI"){
-                    hero.inventario[0+k] = "LIBRO MISTERIOSO";
+                    hero.inventario.push(libro);
                 }
             break;
 
@@ -127,7 +131,7 @@ function encuentro2(){
                 preg = preg.toUpperCase();
                 let arm = "ARMADURA RELUCIENTE"
                 if((preg=="SI"&&(!hero.inventario.includes(arm)))){
-                    hero.inventario[0+k] = arm;
+                    hero.inventario.push(arm);
                     hero.armadura = 2
                     console.log("La armadura del heroe AUMENTÓ !!!")
                 }else {
@@ -142,7 +146,7 @@ function encuentro2(){
                     if(hero.vida<100){
                         hero.vida+=10;
                         (hero.vida>100)?hero.vida=100:hero.vida;
-                        console.log ("La poción restauro 10 puntos de vida, ahora "+ hero.name + " posee " + vida.hero + " HP!!! "); 
+                        console.log ("La poción restauro 10 puntos de vida, ahora "+ hero.name + " posee " + hero.vida + " HP!!! "); 
                     }else{
                         console.log(hero.name + " tomó la poción pero no sintió ningún efecto...");
                     }
@@ -152,15 +156,39 @@ function encuentro2(){
             break;
         }
     }
-    k++;
+    
+}
+
+function encuentro3(){
+    let arma = "KATANA MALDITA LEGENDARIA";
+    let tumba = prompt(hero.name + " encontró una tumba de un HEROE ANTIGUO, ¿la quieres saquear? (SI o NO)");
+    tumba = tumba.toUpperCase();
+    if(tumba=="SI"){
+        console.log(hero.name+" ha encontrado una KATANA MALDITA LEGENDARIA!!!!");
+        let preg=prompt("Desea equipar KATANA MALDITA LEGENDARIA? (SI o NO)");
+        preg = preg.toUpperCase();
+        if(cofre=="SI"){
+            console.log(hero.name+" se siente mas poderoso pero tambien mas vulnerable ");
+            hero.inventario.push(arma);
+            hero.arm = 1 ;
+            hero.daño = 10 ;
+            hero.inventario = hero.inventario.filter(filtroEspada);
+
+            console.log(hero.name+" puede sentir la maldicion...");
+            console.log("La "+arma+" ha consumido todo tu inventario...");
+            console.log(hero.name+" no quiere encontrar más items, solo MATAR...");
+
+        }
+
+    }
 }
 
 
 
 
-
 let pasosHero = prompt( "Ingrese cuanto quiere caminar en el bosque" );
-
+let caso3=false;
+let encEsp;
 for (let i = 0; i < pasosHero; i++) {
 
     encRandom = Math.ceil ( Math.random()*2);
@@ -170,9 +198,19 @@ for (let i = 0; i < pasosHero; i++) {
             encuentro1();
             break;
         case 2:
+            if (caso3){
+                break;
+            }
+            encEsp= Math.ceil ( Math.random()*20);
+            if(encEsp==20){
+                encuentro3();
+                caso3 = true;
+                break;
+            }
             encuentro2();
+            
             break;
-
+        
     }
    
 }
