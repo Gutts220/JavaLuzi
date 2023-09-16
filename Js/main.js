@@ -33,6 +33,7 @@ function encuentro1() {
     accion=accion.toUpperCase();
     let acum=0;
     let dañoH;
+    let cont=0;
     while ((accion!=="ATACAR")&&(accion!=="HUIR")){
         console.log(hero.name + " no entiende que quieres hacer");
         accion=prompt("quiere ATACAR o HUIR?");
@@ -41,6 +42,8 @@ function encuentro1() {
     }
     if (accion=="ATACAR"){
         while (vidaMons > 0 && hero.vida > 0){
+            cont++;
+            console.log("================== Ronda "+ cont +" =====================");
             dañoH =Math.ceil(Math.random()*(hero.daño-1)+1);
             dañoMons = Math.ceil(Math.random()*(5-1)+1);
             let diceH = Math.ceil(Math.random()*20);
@@ -57,17 +60,17 @@ function encuentro1() {
                 }
             }else {
                 console.log(hero.name+" falló el ataque");
-                console.log("==================================================================================================");
+                
             }
             if ((diceM >= hero.armadura)&&(vidaMons!=0)){
                 hero.vida-=dañoMons;
                 acum+=dañoMons;
                 console.log("El goblin apuñaló a " + hero.name + " con una daga haciendole " + dañoMons + " de daño" );
                 console.log(hero.name + " esta sangrando le queda " + hero.vida +" vida");
-                console.log("==================================================================================================");
+                
             }else if (vidaMons!=0) {
                 console.log("El gobling falló el ataque");
-                console.log("==================================================================================================");
+                
             }
 
         } 
@@ -151,6 +154,8 @@ function encuentro2(){
     }
     k++;
 }
+
+
 
 
 
