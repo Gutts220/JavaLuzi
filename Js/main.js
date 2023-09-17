@@ -259,7 +259,10 @@ function encuentro3(){
 
         }
 
+    }else{
+        return false;
     }
+    return true;
 }
 
 
@@ -284,10 +287,9 @@ for (let i = 0; i < pasosHero; i++) {
             if (caso3){
                 break;
             }
-            encEsp= Math.ceil ( Math.random()*(2-1)+1);
-            if(encEsp==2){
-                encuentro3();
-                caso3 = true;
+            encEsp= Math.ceil ( Math.random()*20);
+            if(encEsp==20){
+                caso3 = encuentro3();
             }else{
                 encuentro2();
             }
