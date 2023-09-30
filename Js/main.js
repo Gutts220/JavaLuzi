@@ -97,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (outputDiv.hasChildNodes()) {
                     outputDiv.removeChild(outputDiv.lastChild);
                 }
-                console.log("Valor ingresado por el usuario:", userInput);
+                
                 
                 resolve(userInput);
             });
@@ -122,7 +122,7 @@ document.addEventListener("DOMContentLoaded", function () {
     
         let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
         itemNombre = primeraLetraMayuscula = (itemNombre)
-        
+
         let item = merchant.itemsForSale.find((item) => item.name === itemNombre);
     
         if (!item) {
@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pasosHero = parseInt(await obtenerInput("Ingrese cuánto quiere caminar en el bosque"));
         }
     
-        console.log("Valor de pasosHero:", pasosHero); // Agregar esto para depurar
+        
 
        
 
