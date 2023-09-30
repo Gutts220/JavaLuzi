@@ -1,6 +1,3 @@
-
-
-
 document.addEventListener("DOMContentLoaded", function () {
     let hero = {
         name: "",
@@ -12,15 +9,33 @@ document.addEventListener("DOMContentLoaded", function () {
     };
     
     let merchant = {
-        name: "Comerciante",
-        itemsForSale: [
-          { name: "Espada", price: 20 },
-          { name: "Poción de curación", price: 10 },
-          { name: "manzana", price: 5 },
-          { name: "caña de pescar", price: 15 },
-          { name: "catalejo", price: 30 },
-          { name: "Mapa del tesoro", price: 50 },
-        ],
+        name: "Juan Miguel",
+            "itemsForSale": [
+                {
+                    "name": "Espada",
+                    "price": 20
+                },
+                {
+                    "name": "Poción de curación",
+                    "price": 10
+                },
+                {
+                    "name": "Manzana",
+                    "price": 5
+                },
+                {
+                    "name": "Caña de pescar",
+                    "price": 15
+                },
+                {
+                    "name": "Catalejo",
+                    "price": 30
+                },
+                {
+                    "name": "Mapa del tesoro",
+                    "price": 50
+                }
+            ]
       };
     
     let encRandom ;
@@ -39,6 +54,12 @@ document.addEventListener("DOMContentLoaded", function () {
     let continueButton = document.getElementById("continueButton");
     let outputDiv = document.getElementById("output");
     let inputDiv = document.getElementById("inputDiv");
+    
+    const primeraLetraMayuscula = (cadena) => {
+        const primerCaracter = cadena.charAt(0).toUpperCase();
+        const restoDeLaCadena = cadena.substring(1, cadena.length);
+        return primerCaracter.concat(restoDeLaCadena);
+    }
 
     async function mostrarMensaje(mensaje) {
         
@@ -86,34 +107,44 @@ document.addEventListener("DOMContentLoaded", function () {
     function filtroEspada(item) {
         return item === "KATANA MALDITA LEGENDARIA";
     }
+
+    async function mostrarMercaderias(merchant) {
+        await mostrarMensaje(`¡Bienvenido al comercio de ${merchant.name}! Aquí tienes las mercaderías disponibles:`);
+      
+         merchant.itemsForSale.forEach(async (item) => {
+          await mostrarMensaje(`- ${item.name}: ${item.price} de oro`);
+        });
+    }
     
-    async function comprarItem(merchant, hero) {
-        // Mostrar mercaderías disponibles
+    async function encuentroMerchant(merchant, hero) {
+        
         mostrarMercaderias(merchant);
-      
-        // Obtener el nombre del artículo que el héroe desea comprar
+    
         let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
-      
-        // Buscar el artículo en las mercaderías del comerciante
+        itemNombre = primeraLetraMayuscula = (itemNombre)
+        
         let item = merchant.itemsForSale.find((item) => item.name === itemNombre);
-      
+    
         if (!item) {
-          await mostrarMensaje("El comerciante no tiene ese artículo en venta.");
-          return;
+            await mostrarMensaje("El comerciante no tiene ese artículo en venta.");
+            return;
         }
-      
-        // Verificar si el héroe tiene suficiente oro para comprar el artículo
+    
         if (hero.gold < item.price) {
-          await mostrarMensaje("No tienes suficiente oro para comprar ese artículo.");
-          return;
+            await mostrarMensaje("No tienes suficiente oro para comprar ese artículo.");
+            return;
         }
-      
-        // Realizar la compra
+    
         hero.gold -= item.price;
         hero.inventario.push(item.name);
-      
-        await mostrarMensaje(`Has comprado ${item.name} por ${item.price} de oro.`);
-      }
+        const itemIndex = merchant.itemsForSale.indexOf(item);
+        if (itemIndex !== -1) {
+            merchant.itemsForSale.splice(itemIndex, 1);
+            await mostrarMensaje(`${hero.name} ha comprado ${item.name} por ${item.price} de oro.`);
+        } else {
+            await mostrarMensaje(`${hero.name} no puede comprar ${item.name}.`);
+        }
+    }
 
     async function encuentro1() {
         return new Promise(async (resolve) => {
@@ -284,13 +315,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function juego() {
+          
         
+
         hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
         await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
         
         let pasosHero = await obtenerInput("Ingrese cuanto quiere caminar en el bosque")
         
-
+        
         while (isNaN(pasosHero)) {
             pasosHero = parseInt(await obtenerInput("Ingrese cuánto quiere caminar en el bosque"));
         }
@@ -301,7 +334,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         for (let i = 0; i < pasosHero; i++) {
             
-            encRandom = Math.ceil ( Math.random()*2);
+            encRandom = Math.ceil ( Math.random()*3);
             switch (encRandom) {
                 case 1:
                     // if (caso3){
@@ -309,7 +342,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     //     break;
                     // }
                     await encuentro1();
-                    break;
+                break;
                 case 2:
                     if (caso3){
                         break;
@@ -317,11 +350,14 @@ document.addEventListener("DOMContentLoaded", function () {
                     encEsp= Math.ceil ( Math.random()*20);
                     if(encEsp==20){
                         caso3 = await encuentro3();
+                        
                     }else{
                         await encuentro2();
+                        
                     }
-                    
-                    
+                break;
+                case 3:
+                    await encuentroMerchant(merchant, hero);
                     break;
                 
             }
