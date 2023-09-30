@@ -19,6 +19,7 @@ let vidaMons;
 let dañoMons;
 let armMons;
 
+
 function filtroEspada(item) {
     return item === "KATANA MALDITA LEGENDARIA";
 }
@@ -37,7 +38,7 @@ function maldicion(armaM){
         if (accion=="HUIR"){
             console.log(hero.name+" no quiere huir, siente una fuerte sed de sangre...")
         }else{
-            console.log(hero.name + " no entiende que quieres hacer");
+           console.log(hero.name + " no entiende que quieres hacer");
         }
         
         
@@ -192,7 +193,7 @@ function encuentro2(){
 
             case 2:
                 let libro = "LIBRO MISTERIOSO";
-                preg = prompt(hero.name + "abrió el cofre y encontró un LIBRO MISTERIOSO, ¿Llevar LIBRO MISTERIOSO? (SI o NO)");
+                preg = prompt(hero.name + " abrió el cofre y encontró un LIBRO MISTERIOSO, ¿Llevar LIBRO MISTERIOSO? (SI o NO)");
                 preg = preg.toUpperCase();
                 if (preg=="SI"){
                     hero.inventario.push(libro);
@@ -260,6 +261,7 @@ function encuentro3(){
         }
 
     }else{
+        console.log(hero.name+" ha abandonado la tumba para adentrarse mas en el bosque...");
         return false;
     }
     return true;
@@ -303,7 +305,7 @@ for (let i = 0; i < pasosHero; i++) {
 
 
 
-console.log(hero.name + " ha podido salir del bosque ileso, encontró: " + hero.inventario );
-console.log(" Al salir del bosque el puede divisar un castillo " + hero.name + "irá a aventurarse en el?...");
+console.log(hero.name + " ha logrado salir del bosque sin un rasguño, encontró: " + hero.inventario );
+console.log(" Al salir del bosque puede divisar un castillo " + hero.name + " irá a aventurarse en el?...");
 
 
