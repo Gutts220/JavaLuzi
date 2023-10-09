@@ -1,0 +1,85 @@
+main {
+    width: 100%;
+	height: 400px;
+}
+
+.visual{
+    height: 500px;
+    width: 100%;
+    display: block;
+    background:  url(../imagenes/misty_forest.jpg);
+    background-size: contain;
+    background-attachment: fixed;
+	position: relative;
+}
+
+.visual__img{
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+}
+
+.visual__txt{
+    height: fit-content;
+    width: fit-content;
+    display: flex;
+    background-color: #fcfcfc;
+}
+
+.interactive{
+    height: 100px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "btn input";
+    background: #7c4506;
+    background-size: contain;
+	position: relative;
+}
+
+.interactive__btn{
+    height: 50%;
+    width: 50%;
+    grid-area: btn;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
+
+}
+
+.interactive__btn__btns{
+    padding: 12px;
+    margin-top: 20px;
+}
+
+.interactive__input{
+    height: 50%;
+    width: 50%;
+    grid-area: input;
+    justify-content: space-between; 
+    align-items: center; 
+    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+        "txt btn";
+    position: relative;
+}
+
+#inputText{
+    grid-area: txt;
+    margin: 20px;
+    padding: 12px;
+}
+
+#submitButton{
+    grid-area: btn;
+    margin: 20px;
+    padding: 12px;
+}
