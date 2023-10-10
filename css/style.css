@@ -1,13 +1,12 @@
-main {
-    width: 100%;
-	height: 400px;
+body{
+    background: #000000;
 }
 
 .visual{
     height: 500px;
     width: 100%;
     display: block;
-    background:  url(../imagenes/misty_forest.jpg);
+    background:  url(../assets/imagenes/misty_forest.jpg);
     background-size: contain;
     background-attachment: fixed;
 	position: relative;
@@ -29,11 +28,12 @@ main {
 .interactive{
     height: 100px;
     width: 100%;
+    
     display: grid;
     grid-template-columns: 1fr;
     grid-template-areas:
         "btn input";
-    background: #7c4506;
+    background: url(../assets/imagenes/texture_1.jpeg);
     background-size: contain;
 	position: relative;
 }
@@ -54,6 +54,9 @@ main {
 .interactive__btn__btns{
     padding: 12px;
     margin-top: 20px;
+    background: url(../assets/imagenes/texture_3.jpeg);
+    
+    
 }
 
 .interactive__input{
@@ -76,10 +79,13 @@ main {
     grid-area: txt;
     margin: 20px;
     padding: 12px;
+    background: url(../assets/imagenes/texture_4.jpeg);
+    background-size: cover;
 }
 
 #submitButton{
     grid-area: btn;
     margin: 20px;
     padding: 12px;
+    background: url(../assets/imagenes/texture_3.jpeg);
 }
