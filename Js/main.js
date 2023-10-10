@@ -52,8 +52,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let inputText = document.getElementById("inputText");
     let submitButton = document.getElementById("submitButton");
     let continueButton = document.getElementById("continueButton");
-    let outputDiv = document.getElementById("output");
-    let inputDiv = document.getElementById("inputDiv");
+    let outputDiv = document.getElementById("msjDiv");
+    
     
     const primeraLetraMayuscula = (cadena) => {
         const primerCaracter = cadena.charAt(0).toUpperCase();
@@ -62,15 +62,25 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     async function mostrarMensaje(mensaje) {
-        
-        let mensajeElement = document.createElement("p");
-        mensajeElement.textContent = mensaje;
+        let messageList = document.getElementById("msjDiv");
+    
+        if (messageList) {
+            let mensajeElement = document.createElement("li");
+            mensajeElement.textContent = mensaje;
+    
+            messageList.appendChild(mensajeElement);
+            messageList.scrollTop = messageList.scrollHeight;
+        } else {
+            console.error("Elemento 'messageList' no encontrado.");
+        }
+    }
 
-        
-        outputDiv.appendChild(mensajeElement);
-
-        
-        outputDiv.scrollTop = outputDiv.scrollHeight;
+    function mostrarImagen(src) {
+        const imageDisplay = document.getElementById("imageDisplay");
+    
+        if (imageDisplay) {
+            imageDisplay.src = src;
+        }
     }
 
     async function obtenerInput(mensaje) {
@@ -78,22 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
             
             mostrarMensaje(mensaje);
 
-            
-            inputDiv.style.display = "block";
-            submitButton.style.display = "block";
-
-           
             submitButton.addEventListener("click", function () {
                 
                 let userInput = inputText.value;
-                
-               
-                
-
-                
-                inputDiv.style.display = "none";
-                submitButton.style.display = "none";
-
                 if (outputDiv.hasChildNodes()) {
                     outputDiv.removeChild(outputDiv.lastChild);
                 }
@@ -121,7 +118,7 @@ document.addEventListener("DOMContentLoaded", function () {
         mostrarMercaderias(merchant);
     
         let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
-        itemNombre = primeraLetraMayuscula = (itemNombre)
+        itemNombre = primeraLetraMayuscula(itemNombre)
 
         let item = merchant.itemsForSale.find((item) => item.name === itemNombre);
     
@@ -148,9 +145,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function encuentro1() {
         return new Promise(async (resolve) => {
-                    
+            
+            await mostrarImagen("../assets/imagenes/goblin.jpeg");
             await mostrarMensaje("Un Goblin acaba de salir detras de un arbol!!");
-    
+            
             vidaMons = Math.ceil(Math.random()*(15 - 5) + 5);
             armMons = Math.ceil(Math.random()* 7) ;
     
@@ -211,8 +209,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     async function encuentro2(){
-
+        await mostrarImagen("../assets/imagenes/cofre.jpeg");
         let cofre = await obtenerInput(hero.name + " encontró un cofre entre los arbustos, parece que no hay nadie cerca ¿lo quieres abrir? (SI o NO)");
+        
         cofre = cofre.toUpperCase();
         if(cofre=="SI"){
          
@@ -225,7 +224,9 @@ document.addEventListener("DOMContentLoaded", function () {
             switch (cofreRandom) {
     
                 case 1:
+                    await mostrarImagen("../assets/imagenes/espada.jpeg");
                     await mostrarMensaje(hero.name + " abrió el cofre encontró una ESPADA DE CRUZADO!!!");
+                    
                     preg=await obtenerInput("¿Equipar la ESPADA DE CRUZADO? (SI o NO)");
                     preg = preg.toUpperCase();
                     let espada = "ESPADA DE CRUZADO";
@@ -233,13 +234,16 @@ document.addEventListener("DOMContentLoaded", function () {
                         hero.inventario.push(espada) ;
                         hero.daño += 1;
                         await mostrarMensaje("Fuerza del heroe AUMENTÓ en 1, ahora posee "+ hero.daño +" str !!!!");
+                       
                     }else {
                         await mostrarMensaje(hero.name +" ya posee este objeto, no se puede equipar ");
                     }
                 break;
     
                 case 2:
+                    await mostrarImagen("../assets/imagenes/libro_mist.jpeg");
                     let libro = "LIBRO MISTERIOSO";
+                    
                     preg = await obtenerInput(hero.name + " abrió el cofre y encontró un LIBRO MISTERIOSO, ¿Llevar LIBRO MISTERIOSO? (SI o NO)");
                     preg = preg.toUpperCase();
                     if (preg=="SI"){
@@ -248,10 +252,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
     
                 case 3:
+                    await mostrarImagen("../assets/imagenes/cofre.jpeg");
                     await mostrarMensaje(hero.name+" abrió el cofre pero no encontró nada... ");
+                    
                 break;
     
                 case 4:
+                    await mostrarImagen("../assets/imagenes/armadura.jpeg");
                     preg=await obtenerInput(hero.name + " abrió el cofre y encontro una ARMADURA RELUCIENTE, ¿Equipar ARMADURA RELUCIENTE? (SI o NO)");
                     preg = preg.toUpperCase();
                     let arm = "ARMADURA RELUCIENTE"
@@ -265,7 +272,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
     
                 case 5:
+                    await mostrarImagen("../assets/imagenes/pocion.jpeg")
                     preg=await obtenerInput(hero.name + " abrió el cofre y encontro una POCION DE CURACION, ¿Usar POCION? (SI o NO)");
+                    
                     preg = preg.toUpperCase();
                     if(preg=="SI"){
                         if(hero.vida<100){
@@ -286,10 +295,14 @@ document.addEventListener("DOMContentLoaded", function () {
     
     async function encuentro3(){
         let arma = "KATANA MALDITA LEGENDARIA";
+        await mostrarImagen("../assets/imagenes/tumba.jpeg")
         let tumba = await obtenerInput(hero.name + " encontró una tumba de un HEROE ANTIGUO, ¿la quieres saquear? (SI o NO)");
+        
         tumba = tumba.toUpperCase();
         if(tumba=="SI"){
+            await mostrarImagen("../assets/imagenes/katana.jpeg");
             await mostrarMensaje(hero.name+" ha encontrado una KATANA MALDITA LEGENDARIA!!!!");
+            
             let preg=await obtenerInput("Desea equipar KATANA MALDITA LEGENDARIA? (SI o NO)");
             preg = preg.toUpperCase();
             if(preg=="SI"){
@@ -308,7 +321,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
     
         }else{
+            await mostrarImagen("../assets/imagenes/bald_forest.jpeg");
             await mostrarMensaje(hero.name+" ha abandonado la tumba para adentrarse mas en el bosque...");
+           
             return false;
         }
         return true;
@@ -319,8 +334,10 @@ document.addEventListener("DOMContentLoaded", function () {
         
 
         hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
+        await mostrarImagen("../assets/imagenes/heroe.jpeg");
         await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
         
+
         let pasosHero = await obtenerInput("Ingrese cuanto quiere caminar en el bosque")
         
         
@@ -364,15 +381,16 @@ document.addEventListener("DOMContentLoaded", function () {
            
         }
         
-        
+        await mostrarImagen("../assets/imagenes/heroe_2.jpeg")
         await mostrarMensaje(hero.name + " ha logrado salir del bosque sin un rasguño, encontró: " + hero.inventario)
+        await mostrarImagen("../assets/imagenes/castle.jpeg")
         await mostrarMensaje(" Al salir del bosque puede divisar un castillo " + hero.name + " irá a aventurarse en el?...")    
     }
 
     // Iniciar el juego cuando se hace clic en el botón "Continuar"
-    continueButton.style.display = "block";
+    continueButton.style.display ;
     continueButton.addEventListener("click", function () {
-        continueButton.style.display = "none";
+        continueButton.style.display ;
         juego();
     });
 });
