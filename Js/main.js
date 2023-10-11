@@ -53,8 +53,33 @@ document.addEventListener("DOMContentLoaded", function () {
     let submitButton = document.getElementById("submitButton");
     let continueButton = document.getElementById("continueButton");
     let outputDiv = document.getElementById("msjDiv");
+    let btns = document.getElementsByClassName("interactive__btn__btns");
+    let btnsArray = Array.from(btns);
     
+    function ocultarInput(){
+        inputText.style.display="none";
+        submitButton.style.display="none";
+    }
+
+    function mostrarInput(){
+        inputText.style.display ="flex";
+        submitButton.style.display="flex";
+    }
     
+    // function obtenerBtn(){
+    //     return new Promise((resolve) => {
+            
+    //         mostrarMensaje(mensaje);
+    //         btns.addEventListener("click", function(){
+    //             let userBtns = btns.value;
+    //             resolve(userBtns);
+    //         })
+        
+    //     });
+        
+    // }
+    
+
     const primeraLetraMayuscula = (cadena) => {
         const primerCaracter = cadena.charAt(0).toUpperCase();
         const restoDeLaCadena = cadena.substring(1, cadena.length);
@@ -89,15 +114,23 @@ document.addEventListener("DOMContentLoaded", function () {
             mostrarMensaje(mensaje);
 
             submitButton.addEventListener("click", function () {
-                
+                ocultarInput();
                 let userInput = inputText.value;
                 if (outputDiv.hasChildNodes()) {
                     outputDiv.removeChild(outputDiv.lastChild);
                 }
-                
-                
                 resolve(userInput);
             });
+
+            
+            btnsArray.forEach(function (btn) {
+                btn.addEventListener("click", function () {
+                    let userBtns = btn.textContent;
+                    resolve(userBtns);
+                });
+            });
+
+
         });
     }
     
@@ -115,6 +148,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
     async function encuentroMerchant(merchant, hero) {
         
+        mostrarInput();
+
         mostrarMercaderias(merchant);
     
         let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
@@ -332,13 +367,13 @@ document.addEventListener("DOMContentLoaded", function () {
     async function juego() {
           
         
-
+        
         hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
         await mostrarImagen("../assets/imagenes/heroe.jpeg");
         await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
         
 
-        let pasosHero = await obtenerInput("Ingrese cuanto quiere caminar en el bosque")
+        let pasosHero = 15;
         
         
         while (isNaN(pasosHero)) {
@@ -390,7 +425,7 @@ document.addEventListener("DOMContentLoaded", function () {
     // Iniciar el juego cuando se hace clic en el botón "Continuar"
     continueButton.style.display ;
     continueButton.addEventListener("click", function () {
-        continueButton.style.display ;
+        continueButton.style.display="none";
         juego();
     });
 });
