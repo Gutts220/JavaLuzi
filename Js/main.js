@@ -66,19 +66,6 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.style.display="flex";
     }
     
-    // function obtenerBtn(){
-    //     return new Promise((resolve) => {
-            
-    //         mostrarMensaje(mensaje);
-    //         btns.addEventListener("click", function(){
-    //             let userBtns = btns.value;
-    //             resolve(userBtns);
-    //         })
-        
-    //     });
-        
-    // }
-    
 
     const primeraLetraMayuscula = (cadena) => {
         const primerCaracter = cadena.charAt(0).toUpperCase();
@@ -422,10 +409,16 @@ document.addEventListener("DOMContentLoaded", function () {
         await mostrarMensaje(" Al salir del bosque puede divisar un castillo " + hero.name + " irá a aventurarse en el?...")    
     }
 
-    // Iniciar el juego cuando se hace clic en el botón "Continuar"
-    continueButton.style.display ;
-    continueButton.addEventListener("click", function () {
-        continueButton.style.display="none";
-        juego();
-    });
+    Swal.fire({
+        title: 'The Misty Forest',
+        imageUrl: '../assets/images/bald_forest.jpg',
+        imageWidth: 400,
+        imageHeight: 200,
+        imageAlt: 'Adventure Game',
+        confirmButtonText: 'Empezar',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          juego();
+        }
+      })
 });
