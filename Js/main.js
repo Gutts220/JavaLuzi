@@ -51,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     let inputText = document.getElementById("inputText");
     let submitButton = document.getElementById("submitButton");
-    let continueButton = document.getElementById("continueButton");
     let outputDiv = document.getElementById("msjDiv");
     let btns = document.getElementsByClassName("interactive__btn__btns");
 
@@ -100,8 +99,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function mostrarMensaje(mensaje) {
         let messageList = document.getElementById("msjDiv");
-    
         if (messageList) {
+            
             let mensajeElement = document.createElement("li");
             mensajeElement.textContent = mensaje;
     
@@ -111,6 +110,8 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error("Elemento 'messageList' no encontrado.");
         }
     }
+
+    
 
     function mostrarImagen(src) {
         const imageDisplay = document.getElementById("imageDisplay");
@@ -152,7 +153,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function mostrarMercaderias(merchant) {
         await mostrarMensaje(`¡Bienvenido al comercio de ${merchant.name}! Aquí tienes las mercaderías disponibles:`);
-      
+        
          merchant.itemsForSale.forEach(async (item) => {
           await mostrarMensaje(`- ${item.name}: ${item.price} de oro`);
         });
@@ -168,16 +169,18 @@ document.addEventListener("DOMContentLoaded", function () {
     
         let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
         itemNombre = primeraLetraMayuscula(itemNombre)
-
+    
         let item = merchant.itemsForSale.find((item) => item.name === itemNombre);
     
         if (!item) {
             await mostrarMensaje("El comerciante no tiene ese artículo en venta.");
+           
             return;
         }
     
         if (hero.gold < item.price) {
             await mostrarMensaje("No tienes suficiente oro para comprar ese artículo.");
+            
             return;
         }
     
@@ -201,11 +204,13 @@ document.addEventListener("DOMContentLoaded", function () {
             await mostrarImagen("../assets/imagenes/goblin.jpeg");
             await mostrarMensaje("Un Goblin acaba de salir detras de un arbol!!");
             
+            
             vidaMons = Math.ceil(Math.random()*(15 - 5) + 5);
             armMons = Math.ceil(Math.random()* 7) ;
     
             accion= await obtenerInput("quiere ATACAR o HUIR?");
             accion=accion.toUpperCase();
+            
             let acum=0;
             let dañoH;
             let cont=0;
@@ -424,9 +429,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     }
 
-    async function juego() {
-          
-        
+    async function theStart(){
         ocultarAccion();
         ocultarSiNo();
         mostrarInput();
@@ -434,7 +437,14 @@ document.addEventListener("DOMContentLoaded", function () {
         
         await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
         await mostrarImagen("../assets/imagenes/heroe.jpeg");
+       
+    }
+
+    async function juego() {
+          
         
+        
+        await theStart();
 
         let pasosHero = 15;
         
@@ -446,6 +456,10 @@ document.addEventListener("DOMContentLoaded", function () {
         await mostrarImagen("../assets/imagenes/castle.jpeg")
         await mostrarMensaje(" Al salir del bosque puede divisar un castillo " + hero.name + " irá a aventurarse en el?...")    
     }
+    
+    ocultarAccion();
+    ocultarInput();
+    ocultarSiNo();
 
     Swal.fire( {
         title: 'The Misty Forest',
