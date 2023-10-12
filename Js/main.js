@@ -163,7 +163,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ocultarAccion();
         ocultarSiNo();
         mostrarInput();
-
+        await mostrarImagen("../assets/imagenes/merchant.jpeg");
         mostrarMercaderias(merchant);
     
         let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
@@ -389,30 +389,9 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    async function juego() {
-          
-        
-        ocultarAccion();
-        ocultarSiNo();
-        mostrarInput();
-        hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
-        await mostrarImagen("../assets/imagenes/heroe.jpeg");
-        await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
-        
-
-        let pasosHero = 15;
-        
-        
-        while (isNaN(pasosHero)) {
-            pasosHero = parseInt(await obtenerInput("Ingrese cuánto quiere caminar en el bosque"));
-        }
-    
-        
-
-       
-
+    async function encuentrosJuego(pasosHero){
         for (let i = 0; i < pasosHero; i++) {
-            
+        
             encRandom = Math.ceil ( Math.random()*3);
             switch (encRandom) {
                 case 1:
@@ -442,6 +421,25 @@ document.addEventListener("DOMContentLoaded", function () {
             }
            
         }
+
+    }
+
+    async function juego() {
+          
+        
+        ocultarAccion();
+        ocultarSiNo();
+        mostrarInput();
+        hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
+        
+        await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
+        await mostrarImagen("../assets/imagenes/heroe.jpeg");
+        
+
+        let pasosHero = 15;
+        
+        await encuentrosJuego(pasosHero);
+        
         
         await mostrarImagen("../assets/imagenes/heroe_2.jpeg")
         await mostrarMensaje(hero.name + " ha logrado salir del bosque sin un rasguño, encontró: " + hero.inventario)
@@ -451,13 +449,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     Swal.fire({
         title: 'The Misty Forest',
-        imageUrl: '../assets/images/bald_forest.jpg',
+        html: '<img id="swal_image"src="../assets/imagenes/bald_forest.jpg" alt="Adventure Game" >',
         imageWidth: 400,
         imageHeight: 200,
-        imageAlt: 'Adventure Game',
         confirmButtonText: 'Empezar',
       }).then((result) => {
         if (result.isConfirmed) {
+          
           juego();
         }
       })

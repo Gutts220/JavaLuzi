@@ -115,3 +115,8 @@ body{
     padding: 12px;
     background: url(../assets/imagenes/texture_3.jpeg);
 }
+
+#swal_image{
+    width:400px; 
+    height:200px;
+}
