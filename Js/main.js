@@ -54,6 +54,11 @@ document.addEventListener("DOMContentLoaded", function () {
     let continueButton = document.getElementById("continueButton");
     let outputDiv = document.getElementById("msjDiv");
     let btns = document.getElementsByClassName("interactive__btn__btns");
+
+    let btnAtacar = document.getElementById("atacar");
+    let btnHuir = document.getElementById("huir");
+    let btnSi = document.getElementById("si");
+    let btnNo = document.getElementById("no");
     let btnsArray = Array.from(btns);
     
     function ocultarInput(){
@@ -64,6 +69,26 @@ document.addEventListener("DOMContentLoaded", function () {
     function mostrarInput(){
         inputText.style.display ="flex";
         submitButton.style.display="flex";
+    }
+
+    function mostrarSiNo(){
+        btnSi.style.display="flex";
+        btnNo.style.display="flex";
+    }
+
+    function ocultarSiNo(){
+        btnSi.style.display="none";
+        btnNo.style.display="none";
+    }
+
+    function mostrarAccion(){
+        btnAtacar.style.display="flex";
+        btnHuir.style.display="flex";
+    }
+
+    function ocultarAccion(){
+        btnAtacar.style.display="none";
+        btnHuir.style.display="none";
     }
     
 
@@ -135,6 +160,8 @@ document.addEventListener("DOMContentLoaded", function () {
     
     async function encuentroMerchant(merchant, hero) {
         
+        ocultarAccion();
+        ocultarSiNo();
         mostrarInput();
 
         mostrarMercaderias(merchant);
@@ -167,7 +194,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
     async function encuentro1() {
         return new Promise(async (resolve) => {
-            
+            ocultarInput();
+            ocultarSiNo();
+            mostrarAccion();
+
             await mostrarImagen("../assets/imagenes/goblin.jpeg");
             await mostrarMensaje("Un Goblin acaba de salir detras de un arbol!!");
             
@@ -231,6 +261,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     async function encuentro2(){
+        ocultarInput();
+        ocultarAccion();
+        mostrarSiNo();
+
         await mostrarImagen("../assets/imagenes/cofre.jpeg");
         let cofre = await obtenerInput(hero.name + " encontró un cofre entre los arbustos, parece que no hay nadie cerca ¿lo quieres abrir? (SI o NO)");
         
@@ -316,6 +350,10 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
     async function encuentro3(){
+
+        ocultarInput();
+        ocultarAccion();
+        mostrarSiNo();
         let arma = "KATANA MALDITA LEGENDARIA";
         await mostrarImagen("../assets/imagenes/tumba.jpeg")
         let tumba = await obtenerInput(hero.name + " encontró una tumba de un HEROE ANTIGUO, ¿la quieres saquear? (SI o NO)");
@@ -354,7 +392,9 @@ document.addEventListener("DOMContentLoaded", function () {
     async function juego() {
           
         
-        
+        ocultarAccion();
+        ocultarSiNo();
+        mostrarInput();
         hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
         await mostrarImagen("../assets/imagenes/heroe.jpeg");
         await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
