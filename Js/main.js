@@ -447,16 +447,19 @@ document.addEventListener("DOMContentLoaded", function () {
         await mostrarMensaje(" Al salir del bosque puede divisar un castillo " + hero.name + " irá a aventurarse en el?...")    
     }
 
-    Swal.fire({
+    Swal.fire( {
         title: 'The Misty Forest',
         html: '<img id="swal_image"src="../assets/imagenes/bald_forest.jpg" alt="Adventure Game" >',
         imageWidth: 400,
         imageHeight: 200,
+        color: '#86440d',
+        background: '#fff url(../assets/imagenes/texture_3.jpeg)',
         confirmButtonText: 'Empezar',
-      }).then((result) => {
+        confirmButtonColor: '#86440d',
+      }).then(async (result) => {
         if (result.isConfirmed) {
           
-          juego();
+         await juego();
         }
       })
 });
