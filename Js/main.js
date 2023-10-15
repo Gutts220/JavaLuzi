@@ -8,35 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
         inventario: [],
     };
     
-    let merchant = {
-        name: "Juan Miguel",
-            "itemsForSale": [
-                {
-                    "name": "Espada",
-                    "price": 20
-                },
-                {
-                    "name": "Poción de curación",
-                    "price": 10
-                },
-                {
-                    "name": "Manzana",
-                    "price": 5
-                },
-                {
-                    "name": "Caña de pescar",
-                    "price": 15
-                },
-                {
-                    "name": "Catalejo",
-                    "price": 30
-                },
-                {
-                    "name": "Mapa del tesoro",
-                    "price": 50
-                }
-            ]
-      };
+    
     
     let encRandom ;
     let accion;
@@ -113,7 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     
 
-    function mostrarImagen(src) {
+    async function mostrarImagen(src) {
         const imageDisplay = document.getElementById("imageDisplay");
     
         if (imageDisplay) {
@@ -151,48 +123,105 @@ document.addEventListener("DOMContentLoaded", function () {
         return item === "KATANA MALDITA LEGENDARIA";
     }
 
-    async function mostrarMercaderias(merchant) {
-        await mostrarMensaje(`¡Bienvenido al comercio de ${merchant.name}! Aquí tienes las mercaderías disponibles:`);
-        
-         merchant.itemsForSale.forEach(async (item) => {
-          await mostrarMensaje(`- ${item.name}: ${item.price} de oro`);
-        });
+    async function cargaItemsPrincipio() {
+        const response = await fetch('JS/items.json');
+        const merchantItemsJson = localStorage.getItem(response);
+        if (!merchantItemsJson) {
+
+            const merchantItems = [
+                { name: 'Espada', price: 10 },
+                { name: 'Poción', price: 5 },
+                {name: "Manzana",price: 5},
+                {name: "Caña de pescar",price: 15},
+                {name: "Catalejo",price: 30},
+                {name: "Mapa del tesoro",price: 50}
+            ];
+            localStorage.setItem('merchantItems', JSON.stringify(merchantItems));
+        }
     }
+
+    async function mostrarMercaderias() {
+
+        let merchantItems = JSON.parse(localStorage.getItem('merchantItems'));
+
+        await mostrarMensaje(`¡Bienvenido al comercio de Ixidor! Aquí tienes las mercaderías disponibles:`);
     
-    async function encuentroMerchant(merchant, hero) {
-        
+        for (const item of merchantItems) {
+            await mostrarMensaje(`- ${item.name}: ${item.price} de oro`);
+        }
+    }
+
+
+// Función para cargar los items del merchant desde el archivo JSON
+    async function cargarItemsMerchant() {
+        try {
+            const merchantItemsJson = localStorage.getItem('merchantItems');
+            return merchantItemsJson ? JSON.parse(merchantItemsJson) : [];
+        } catch (error) {
+            console.error('Error al cargar los items del merchant:', error);
+            return [];
+        }
+    }
+
+// Función para guardar los items del merchant en el archivo JSON
+    async function guardarItemsMerchant(items) {
+        localStorage.setItem('merchantItems', JSON.stringify(items));
+    }
+
+    async function encuentroMerchant(hero) {
         ocultarAccion();
         ocultarSiNo();
         mostrarInput();
         await mostrarImagen("../assets/imagenes/merchant.jpeg");
-        mostrarMercaderias(merchant);
+        
+        let merchantItems = await cargarItemsMerchant();
     
-        let itemNombre = await obtenerInput("¿Qué artículo desea comprar?");
-        itemNombre = primeraLetraMayuscula(itemNombre)
+        mostrarMercaderias();
     
-        let item = merchant.itemsForSale.find((item) => item.name === itemNombre);
+        let itemNombre = await obtenerInput("¿Qué artículo desea comprar? (Escriba salir para dejar al mercader)");
+        itemNombre = primeraLetraMayuscula(itemNombre);
+        
+        if (itemNombre === 'Salir'){
+            await mostrarMensaje(hero.name + " ha deja atras al mercader misterioso, este se vuelve a esconder entre las sombras..." )
+            return;
+        }
+
+        
     
+            
+        let itemIndex = merchantItems.findIndex((item) => item.name === itemNombre);
+    
+        if (itemIndex === -1) {
+            await mostrarMensaje("El comerciante no tiene ese artículo en venta.");
+            return;
+        }
+
+        let item = merchantItems[itemIndex];
+
         if (!item) {
             await mostrarMensaje("El comerciante no tiene ese artículo en venta.");
-           
             return;
         }
     
         if (hero.gold < item.price) {
             await mostrarMensaje("No tienes suficiente oro para comprar ese artículo.");
-            
             return;
         }
-    
+        
+
         hero.gold -= item.price;
         hero.inventario.push(item.name);
-        const itemIndex = merchant.itemsForSale.indexOf(item);
-        if (itemIndex !== -1) {
-            merchant.itemsForSale.splice(itemIndex, 1);
-            await mostrarMensaje(`${hero.name} ha comprado ${item.name} por ${item.price} de oro.`);
-        } else {
-            await mostrarMensaje(`${hero.name} no puede comprar ${item.name}.`);
-        }
+    
+        
+        merchantItems = merchantItems.filter((merchantItem) => merchantItem.name !== item.name);
+        merchantItems.splice(itemIndex, 1);
+
+        
+        localStorage.setItem('merchantItems', JSON.stringify(merchantItems));
+        
+        await guardarItemsMerchant(merchantItems);
+    
+        await mostrarMensaje(`${hero.name} ha comprado ${item.name} por ${item.price} de oro.`);
     }
 
     async function encuentro1() {
@@ -420,7 +449,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 break;
                 case 3:
-                    await encuentroMerchant(merchant, hero);
+                    await encuentroMerchant(hero);
                     break;
                 
             }
@@ -436,7 +465,7 @@ document.addEventListener("DOMContentLoaded", function () {
         hero.name = await obtenerInput("Ingrese su Nombre de héroe:");
         
         await mostrarMensaje( hero.name + " se esta por adentrar en un bosque desconocido...");
-        await mostrarImagen("../assets/imagenes/heroe.jpeg");
+        await mostrarImagen("./assets/imagenes/heroe.jpeg");
        
     }
 
@@ -445,15 +474,17 @@ document.addEventListener("DOMContentLoaded", function () {
         
         
         await theStart();
-
+        await cargaItemsPrincipio();
         let pasosHero = 15;
         
         await encuentrosJuego(pasosHero);
         
-        
-        await mostrarImagen("../assets/imagenes/heroe_2.jpeg")
+        ocultarAccion();
+        ocultarInput();
+         ocultarSiNo();
+
+        await mostrarImagen("./assets/imagenes/castle.jpg")
         await mostrarMensaje(hero.name + " ha logrado salir del bosque sin un rasguño, encontró: " + hero.inventario)
-        await mostrarImagen("../assets/imagenes/castle.jpeg")
         await mostrarMensaje(" Al salir del bosque puede divisar un castillo " + hero.name + " irá a aventurarse en el?...")    
     }
     

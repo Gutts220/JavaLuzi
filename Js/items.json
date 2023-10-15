@@ -1,0 +1,26 @@
+[
+        {
+            "name": "Espada",
+            "price": 20
+        },
+        {
+            "name": "Poción de curación",
+            "price": 10
+        },
+        {
+            "name": "Manzana",
+            "price": 5
+        },
+        {
+            "name": "Caña de pescar",
+            "price": 15
+        },
+        {
+            "name": "Catalejo",
+            "price": 30
+        },
+        {
+            "name": "Mapa del tesoro",
+            "price": 50
+        }
+]
