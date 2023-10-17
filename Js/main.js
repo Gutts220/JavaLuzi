@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ocultarAccion();
         ocultarSiNo();
         mostrarInput();
-        await mostrarImagen("../assets/imagenes/merchant.jpeg");
+        await mostrarImagen("./assets/imagenes/merchant.jpeg");
         
         let merchantItems = await cargarItemsMerchant();
     
@@ -217,7 +217,7 @@ document.addEventListener("DOMContentLoaded", function () {
             ocultarSiNo();
             mostrarAccion();
 
-            await mostrarImagen("../assets/imagenes/goblin.jpeg");
+            await mostrarImagen("./assets/imagenes/goblin.jpeg");
             await mostrarMensaje("Un Goblin acaba de salir detras de un arbol!!");
             
             
@@ -286,7 +286,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ocultarAccion();
         mostrarSiNo();
 
-        await mostrarImagen("../assets/imagenes/cofre.jpeg");
+        await mostrarImagen("./assets/imagenes/cofre.jpeg");
         let cofre = await obtenerInput(hero.name + " encontró un cofre entre los arbustos, parece que no hay nadie cerca ¿lo quieres abrir? (SI o NO)");
         
         cofre = cofre.toUpperCase();
@@ -301,7 +301,7 @@ document.addEventListener("DOMContentLoaded", function () {
             switch (cofreRandom) {
     
                 case 1:
-                    await mostrarImagen("../assets/imagenes/espada.jpeg");
+                    await mostrarImagen("./assets/imagenes/espada.jpeg");
                     await mostrarMensaje(hero.name + " abrió el cofre encontró una ESPADA DE CRUZADO!!!");
                     
                     preg=await obtenerInput("¿Equipar la ESPADA DE CRUZADO? (SI o NO)");
@@ -318,7 +318,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
     
                 case 2:
-                    await mostrarImagen("../assets/imagenes/libro_mist.jpeg");
+                    await mostrarImagen("./assets/imagenes/libro_mist.jpeg");
                     let libro = "LIBRO MISTERIOSO";
                     
                     preg = await obtenerInput(hero.name + " abrió el cofre y encontró un LIBRO MISTERIOSO, ¿Llevar LIBRO MISTERIOSO? (SI o NO)");
@@ -329,13 +329,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
     
                 case 3:
-                    await mostrarImagen("../assets/imagenes/cofre.jpeg");
+                    await mostrarImagen("./assets/imagenes/cofre.jpeg");
                     await mostrarMensaje(hero.name+" abrió el cofre pero no encontró nada... ");
                     
                 break;
     
                 case 4:
-                    await mostrarImagen("../assets/imagenes/armadura.jpeg");
+                    await mostrarImagen("./assets/imagenes/armadura.jpeg");
                     preg=await obtenerInput(hero.name + " abrió el cofre y encontro una ARMADURA RELUCIENTE, ¿Equipar ARMADURA RELUCIENTE? (SI o NO)");
                     preg = preg.toUpperCase();
                     let arm = "ARMADURA RELUCIENTE"
@@ -349,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
     
                 case 5:
-                    await mostrarImagen("../assets/imagenes/pocion.jpeg")
+                    await mostrarImagen("./assets/imagenes/pocion.jpeg")
                     preg=await obtenerInput(hero.name + " abrió el cofre y encontro una POCION DE CURACION, ¿Usar POCION? (SI o NO)");
                     
                     preg = preg.toUpperCase();
@@ -466,11 +466,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
     Swal.fire( {
         title: 'The Misty Forest',
-        html: '<img id="swal_image"src="../assets/imagenes/bald_forest.jpg" alt="Adventure Game" >',
+        html: '<img id="swal_image"src="./assets/imagenes/bald_forest.jpg" alt="Adventure Game" >',
         imageWidth: 400,
         imageHeight: 200,
         color: '#86440d',
-        background: '#fff url(../assets/imagenes/texture_3.jpeg)',
+        background: '#fff url(./assets/imagenes/texture_3.jpeg)',
         confirmButtonText: 'Empezar',
         confirmButtonColor: '#86440d',
       }).then(async (result) => {
