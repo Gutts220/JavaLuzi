@@ -410,43 +410,24 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    async function encuentrosJuego(pasosHero){
+    async function encuentrosJuego(pasosHero) {
         for (let i = 0; i < pasosHero; i++) {
-        
-            encRandom = Math.ceil ( Math.random()*2);
+            encRandom = Math.ceil(Math.random() * 2);
+    
             switch (encRandom) {
                 case 1:
-                    if (caso3){
-                        maldicion(caso3);
-                        break;
-                    }
-                    encEsp= Math.ceil ( Math.random()*3);
-                    if(encEsp==3){
-                        await encuentroMerchant(hero);
-                        
-                    }else{
-                        await encuentro1();
-                        
-                    }
-                    await encuentro1();
-                break;
+                    caso3 ? await maldicion(caso3) : await (Math.ceil(Math.random() * 3) === 3 ? encuentroMerchant(hero) : await encuentro1());
+                    break;
                 case 2:
-                    if (caso3){
+                    if (caso3) {
                         break;
                     }
-                    encEsp= Math.ceil ( Math.random()*20);
-                    if(encEsp==20){
-                        caso3 = await encuentro3();
-                        
-                    }else{
-                        await encuentro2();
-                        
-                    }
-                break;
+                    encEsp = Math.ceil(Math.random() * 20);
+                    caso3 = encEsp === 20 ? await encuentro3() : caso3;
+                    await (caso3 ? null : await encuentro2());
+                    break;
             }
-           
         }
-
     }
 
     async function theStart(){
