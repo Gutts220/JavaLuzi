@@ -402,7 +402,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
     
         }else{
-            await mostrarImagen("../assets/imagenes/bald_forest.jpeg");
+            await mostrarImagen("assets/imagenes/bald_forest.jpeg");
             await mostrarMensaje(hero.name+" ha abandonado la tumba para adentrarse mas en el bosque...");
            
             return false;
