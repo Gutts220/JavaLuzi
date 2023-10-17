@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let btnHuir = document.getElementById("huir");
     let btnSi = document.getElementById("si");
     let btnNo = document.getElementById("no");
-    let btnsArray = Array.from(btns);
+    let btnsArray = [...btns];
     
     function ocultarInput(){
         inputText.style.display="none";
@@ -63,25 +63,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     
 
-    const primeraLetraMayuscula = (cadena) => {
-        const primerCaracter = cadena.charAt(0).toUpperCase();
-        const restoDeLaCadena = cadena.substring(1, cadena.length);
-        return primerCaracter.concat(restoDeLaCadena);
-    }
+    const primeraLetraMayuscula = (cadena) => cadena.charAt(0).toUpperCase() + cadena.substring(1)
 
-    async function mostrarMensaje(mensaje) {
-        let messageList = document.getElementById("msjDiv");
-        if (messageList) {
-            
-            let mensajeElement = document.createElement("li");
-            mensajeElement.textContent = mensaje;
-    
-            messageList.appendChild(mensajeElement);
-            messageList.scrollTop = messageList.scrollHeight;
-        } else {
-            console.error("Elemento 'messageList' no encontrado.");
-        }
-    }
+    const mostrarMensaje = async (mensaje) => {
+        const messageList = document.getElementById("msjDiv");
+        messageList &&
+            (() => {
+                const mensajeElement = document.createElement("li");
+                mensajeElement.textContent = mensaje;
+                messageList.appendChild(mensajeElement);
+                messageList.scrollTop = messageList.scrollHeight;
+            })();
+    };
 
     
 
@@ -93,29 +86,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function obtenerInput(mensaje) {
+    const obtenerInput = async (mensaje) => {
         return new Promise((resolve) => {
-            
             mostrarMensaje(mensaje);
 
-            submitButton.addEventListener("click", function () {
+            submitButton.addEventListener("click", () => {
                 ocultarInput();
-                let userInput = inputText.value;
-                if (outputDiv.hasChildNodes()) {
-                    outputDiv.removeChild(outputDiv.lastChild);
-                }
+                const userInput = inputText.value;
+                outputDiv.hasChildNodes() && outputDiv.removeChild(outputDiv.lastChild);
                 resolve(userInput);
             });
 
-            
-            btnsArray.forEach(function (btn) {
-                btn.addEventListener("click", function () {
-                    let userBtns = btn.textContent;
+            btnsArray.forEach((btn) => {
+                btn.addEventListener("click", () => {
+                    const userBtns = btn.textContent;
                     resolve(userBtns);
                 });
             });
-
-
         });
     }
     
@@ -123,22 +110,22 @@ document.addEventListener("DOMContentLoaded", function () {
         return item === "KATANA MALDITA LEGENDARIA";
     }
 
-    async function cargaItemsPrincipio() {
+    const cargaItemsPrincipio = async () => {
         const response = await fetch('JS/items.json');
         const merchantItemsJson = localStorage.getItem(response);
-        if (!merchantItemsJson) {
-
+        merchantItemsJson ?? (() => {
             const merchantItems = [
                 { name: 'Espada', price: 10 },
                 { name: 'Poción', price: 5 },
-                {name: "Manzana",price: 5},
-                {name: "Caña de pescar",price: 15},
-                {name: "Catalejo",price: 30},
-                {name: "Mapa del tesoro",price: 50}
+                { name: "Manzana", price: 5 },
+                { name: "Caña de pescar", price: 15 },
+                { name: "Catalejo", price: 30 },
+                { name: "Mapa del tesoro", price: 50 }
             ];
             localStorage.setItem('merchantItems', JSON.stringify(merchantItems));
-        }
-    }
+        })();
+    };
+
 
     async function mostrarMercaderias() {
 
@@ -426,13 +413,21 @@ document.addEventListener("DOMContentLoaded", function () {
     async function encuentrosJuego(pasosHero){
         for (let i = 0; i < pasosHero; i++) {
         
-            encRandom = Math.ceil ( Math.random()*3);
+            encRandom = Math.ceil ( Math.random()*2);
             switch (encRandom) {
                 case 1:
-                    // if (caso3){
-                    //     maldicion(caso3);
-                    //     break;
-                    // }
+                    if (caso3){
+                        maldicion(caso3);
+                        break;
+                    }
+                    encEsp= Math.ceil ( Math.random()*3);
+                    if(encEsp==3){
+                        await encuentroMerchant(hero);
+                        
+                    }else{
+                        await encuentro1();
+                        
+                    }
                     await encuentro1();
                 break;
                 case 2:
@@ -448,10 +443,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         
                     }
                 break;
-                case 3:
-                    await encuentroMerchant(hero);
-                    break;
-                
             }
            
         }
@@ -475,7 +466,7 @@ document.addEventListener("DOMContentLoaded", function () {
         
         await theStart();
         await cargaItemsPrincipio();
-        let pasosHero = 15;
+        let pasosHero = Math.ceil (Math.random()*(15-9)+9);
         
         await encuentrosJuego(pasosHero);
         
