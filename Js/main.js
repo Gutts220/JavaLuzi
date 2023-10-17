@@ -111,7 +111,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     const cargaItemsPrincipio = async () => {
-        const response = await fetch('JS/items.json');
+        const response = await fetch('Js/items.json');
         const merchantItemsJson = localStorage.getItem(response);
         merchantItemsJson ?? (() => {
             const merchantItems = [
@@ -159,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
         ocultarAccion();
         ocultarSiNo();
         mostrarInput();
-        await mostrarImagen("./assets/imagenes/merchant.jpeg");
+        await mostrarImagen("assets/imagenes/merchant.jpeg");
         
         let merchantItems = await cargarItemsMerchant();
     
