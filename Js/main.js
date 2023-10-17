@@ -376,12 +376,12 @@ document.addEventListener("DOMContentLoaded", function () {
         ocultarAccion();
         mostrarSiNo();
         let arma = "KATANA MALDITA LEGENDARIA";
-        await mostrarImagen("../assets/imagenes/tumba.jpeg")
+        await mostrarImagen("assets/imagenes/tumba.jpeg")
         let tumba = await obtenerInput(hero.name + " encontró una tumba de un HEROE ANTIGUO, ¿la quieres saquear? (SI o NO)");
         
         tumba = tumba.toUpperCase();
         if(tumba=="SI"){
-            await mostrarImagen("../assets/imagenes/katana.jpeg");
+            await mostrarImagen("assets/imagenes/katana.jpeg");
             await mostrarMensaje(hero.name+" ha encontrado una KATANA MALDITA LEGENDARIA!!!!");
             
             let preg=await obtenerInput("Desea equipar KATANA MALDITA LEGENDARIA? (SI o NO)");
